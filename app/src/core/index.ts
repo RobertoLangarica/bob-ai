@@ -13,3 +13,6 @@ export * from './storage'
 
 // Activity Hub
 export * from './hub'
+
+// Agents
+export * from './agents'
