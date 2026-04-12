@@ -523,17 +523,6 @@ function getIcon(key: string) {
         <template v-else>
           <div class="flex-1 overflow-y-auto relative" ref="scrollEl">
             <div class="py-2">
-              <!-- New Team — top of chat, close to the input action -->
-              <div v-if="currentView !== 'bob'" class="flex justify-center py-2 pb-1">
-                <button
-                  class="flex items-center gap-1.5 px-3 py-1 cursor-pointer border-0 rounded-full transition-colors"
-                  style="background: transparent; color: #505058"
-                  @click="newTeam"
-                >
-                  <IconNewTeam :size="11" :weight="ICON_WEIGHT" />
-                  <span class="text-[10px]">New Team</span>
-                </button>
-              </div>
               <div
                 v-for="msg in messages"
                 :key="msg.id"
@@ -808,6 +797,17 @@ function getIcon(key: string) {
 
           <!-- Input -->
           <div class="px-4 py-2.5 shrink-0" style="border-top: 1px solid #2a2a2e">
+            <!-- New Team — above the input, right where you'd start typing -->
+            <div v-if="currentView !== 'bob'" class="flex justify-start mb-1.5">
+              <button
+                class="flex items-center gap-1.5 px-2 py-0.5 cursor-pointer border-0 rounded-full transition-colors"
+                style="background: transparent; color: #505058"
+                @click="newTeam"
+              >
+                <IconNewTeam :size="11" :weight="ICON_WEIGHT" />
+                <span class="text-[10px]">New Team</span>
+              </button>
+            </div>
             <n-input-group>
               <n-input
                 v-model:value="input"
