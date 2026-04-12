@@ -30,7 +30,7 @@ fi
 export GIT_PAGER=cat
 
 echo "=========================================="
-echo "  SENTINEL // Code Review"
+echo "  ◆ Sentinel // Code Review"
 echo "  PR #$PR_NUMBER | $REPO | base: $BASE_REF"
 echo "=========================================="
 

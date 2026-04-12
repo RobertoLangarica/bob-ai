@@ -2,7 +2,7 @@
 
 > Agent-powered PR review for bob-ai, orchestrated by [overthink](file:///Users/Roberto/Documents/Work/Cline.bot/overthink_rust/).
 
-**Callsign**: Sentinel (Code Review)
+**Callsign**: ◆ Sentinel
 
 ---
 

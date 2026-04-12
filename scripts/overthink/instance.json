@@ -3,7 +3,7 @@
   "name": "bob-ai PR Reviewer",
   "description": "Overthink instance for bob-ai automated code review",
   "repo_root": ".",
-  "callsign": "Sentinel (Code Review)",
+  "callsign": "◆ Sentinel",
 
   "queue": {
     "type": "local",

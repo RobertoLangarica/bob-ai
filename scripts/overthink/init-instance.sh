@@ -26,7 +26,7 @@ OVERTHINK_BIN="$OVERTHINK_REPO/overthink/target/debug/overthink"
 AGENTCTL_BIN="$OVERTHINK_REPO/agentic_layer/target/debug/agentctl"
 
 echo "=========================================="
-echo "  SENTINEL // Instance Init"
+echo "  ◆ Sentinel // Instance Init"
 echo "  repo:    $REPO_ROOT"
 echo "  source:  $OVERTHINK_REPO"
 echo "=========================================="
@@ -132,7 +132,7 @@ echo "[5/5] agent registration"
 
 agentctl agent register \
   --agent-key sentinel.code-review \
-  --charter-json '{"mission":"pr_code_review","scope":"bob-ai","callsign":"Sentinel","capabilities":["diff_analysis","convention_check","architecture_review","security_scan"]}' \
+  --charter-json '{"mission":"pr_code_review","scope":"bob-ai","callsign":"◆ Sentinel","capabilities":["diff_analysis","convention_check","architecture_review","security_scan"]}' \
   2>&1 || echo "  [--] agent already registered"
 
 echo "  [ok] Sentinel registered"
@@ -152,7 +152,7 @@ python3 -c "import json; json.load(open('scripts/overthink/scenarios/pr-review.j
 
 echo ""
 echo "=========================================="
-echo "  SENTINEL // Ready"
+echo "  ◆ Sentinel // Ready"
 echo ""
 echo "  # Add to PATH (or add to ~/.zshrc):"
 echo "  export PATH=\"\$PATH:$(dirname "$OVERTHINK_BIN"):$(dirname "$AGENTCTL_BIN")\""

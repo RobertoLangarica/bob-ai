@@ -3,7 +3,7 @@
   "name": "PR Code Review",
   "description": "Automated code review for bob-ai pull requests. Validates size, conventions, and code quality.",
   "version": "1.0.0",
-  "callsign": "Sentinel",
+  "callsign": "◆ Sentinel",
   "instance": "bob-ai",
 
   "task_spec_ref": "bob-ai.pr_reviewer",
