@@ -19,3 +19,6 @@ export * from './agents'
 
 // Calibration
 export * from './calibration'
+
+// Templates
+export * from './templates'
