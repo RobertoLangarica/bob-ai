@@ -28,3 +28,6 @@ export * from './timeline'
 
 // BoB Orchestrator
 export * from './bob'
+
+// Polish (milestone extraction, session restore, error handling, empty states)
+export * from './polish'
