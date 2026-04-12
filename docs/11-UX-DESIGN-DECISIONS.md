@@ -27,22 +27,42 @@ Updated as we iterate.
 
 ### Top Navigation Bar (no sidebar)
 
-We tried a sidebar and rejected it. Reasons:
-
-- Takes too much horizontal space in a compact window.
-- Creates a two-panel mental model when we want single-focus.
-- The sidebar was replaced by a **horizontal tab strip** at the top.
+We tried a sidebar and rejected it (see Rejected Ideas). Then tried team tabs in the nav bar — also rejected because the nav got cluttered with many teams.
 
 **Current layout:**
 
 ```
-[👻 BoB] | [⚙ SWE Team ●] [👽 Research Team] [✨ New]  ...  [Orbital|Tasks] [💓 Activity] [🍪]
+[👻 BoB ▾ SWE Team ●]  ...  [Orbital|Tasks] [💓 Activity] [🍪]
+                                ↑ only when Activity mode
 ```
 
-- **Left side**: BoB + team tabs (click to switch chat)
+- **Left side**: BoB avatar as a **hoverable dropdown menu** (n-popover, trigger=hover)
+  - Shows current team name + status dot next to BoB icon
+  - Hover opens a dropdown listing BoB + all teams
+  - Click an item to switch chat context
+  - BoB entry shows "ai" in neon pink on the right
+  - Running teams show green dot, paused show yellow dot
 - **Right side**: Activity toggle + sub-view switcher + settings
-- Active tab gets a `#1e1e22` background pill
-- Running teams show a green status dot
+- Active item gets `#1e1e22` background in the dropdown
+- Dropdown styled: `#161619` background, `#2a2a2e` border, 180px min-width
+
+### New Team Button
+
+- **Not in the nav bar** — too important to hide, but nav space is precious
+- Instead: a **floating bubble embedded in the top border of the chat area**
+- Visually: a small pill that hangs from the top edge (`rounded-b-lg`, no top border)
+- Contains: MagicWand icon + "New Team" label
+- Subtle by default (`#707078` text), highlights to cyan when already on BoB chat
+- On hover: slight downward expansion (`hover:pb-1.5`) for tactile feel
+- Click action: switches to BoB chat (team creation happens through conversation)
+
+**Icon candidates evaluated:**
+| Icon | Metaphor | Verdict |
+|------|----------|---------|
+| MagicWand | Conjure a team | ✅ Current pick — feels like creation magic |
+| Lightning | Spark a team | Good energy, but too aggressive |
+| Planet | New world | Nice but too abstract |
+| Compass | New direction | Exploratory, but doesn't say "create" |
 
 ### Two Modes
 
@@ -140,6 +160,7 @@ Rule: **No boring icons.** Every icon should feel like it was picked by someone 
 |--------|------|----------|
 | Settings | Cookie | Sweet config |
 | New | Sparkle | Fresh |
+| New Team | MagicWand | Conjure a team |
 | Send | Shooting Star | Launch |
 | Create | Rocket | Blast off |
 | Customize | Lotus | Bloom |
@@ -251,6 +272,12 @@ Each lane contains:
 - Nice but didn't add enough value over Task Stream
 - Removed
 
+### Team Tabs in Nav Bar
+
+- After replacing the sidebar, we put team tabs directly in the nav bar
+- Got cluttered with multiple teams — too many items competing for horizontal space
+- Replaced with BoB hover menu (single avatar → dropdown) — much cleaner
+
 ### Four-panel 2×2 Grid
 
 - Showed all 4 visualizations simultaneously
@@ -293,4 +320,4 @@ app/src/
 - [ ] How compact can we go? Could this work at 600×400?
 - [ ] Should the orbital view animate (slow orbit rotation)?
 - [ ] File chips in task stream — should they be clickable to open in editor?
-- [ ] How do we handle many teams in the top nav? Overflow? Scrollable? Dropdown?
+- [x] ~~How do we handle many teams in the top nav?~~ → Solved: BoB hover menu dropdown. Teams listed vertically in popover, scales naturally.
