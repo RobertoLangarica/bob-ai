@@ -78,14 +78,8 @@ const currentLabel = computed(() => {
   return currentTeam.value?.name || 'BoB'
 })
 const peekTeams = computed(() => {
-  // Show teams that aren't the current view (for the stacked peek)
-  const others =
-    currentView.value === 'bob'
-      ? teams.value
-      : [
-          { id: 'bob', name: 'BoB', icon: 'bob', status: 'idle' as const },
-          ...teams.value.filter((t) => t.id !== currentView.value),
-        ]
+  // Show other teams for the stacked peek (no BoB — it's the brand, not a menu item)
+  const others = teams.value.filter((t) => t.id !== currentView.value)
   return others.slice(0, 3)
 })
 
@@ -408,32 +402,11 @@ function getIcon(key: string) {
               </div>
             </template>
 
-            <!-- Dropdown menu — naked, just icon + name -->
+            <!-- Dropdown menu — naked, just teams -->
             <div
               class="rounded-lg py-1.5 px-1"
               style="background: #131315; border: 1px solid #222226; min-width: 160px"
             >
-              <!-- BoB -->
-              <button
-                class="w-full flex items-center gap-2 px-2 py-1.5 cursor-pointer border-0 rounded"
-                style="background: transparent"
-                @click="nav('bob')"
-              >
-                <IconBob
-                  :size="12"
-                  :weight="ICON_WEIGHT"
-                  :style="{ color: currentView === 'bob' ? neon.cyan : '#606068' }"
-                />
-                <span
-                  class="text-[11px]"
-                  :style="{ color: currentView === 'bob' ? '#e0e0e4' : '#808088' }"
-                  >BoB</span
-                >
-                <span class="text-[9px] ml-auto" :style="{ color: neon.pink, opacity: 0.4 }"
-                  >ai</span
-                >
-              </button>
-
               <!-- Teams -->
               <button
                 v-for="team in teams"
@@ -804,15 +777,19 @@ function getIcon(key: string) {
                 style="background: transparent"
                 @click="newTeam"
               >
-                <IconBob
-                  :size="12"
-                  :weight="ICON_WEIGHT"
-                  :style="{ color: neon.cyan, opacity: 0.5 }"
-                />
-                <span class="text-[10px] font-medium" :style="{ color: neon.cyan, opacity: 0.4 }"
-                  >BoB</span
-                >
-                <span class="text-[8px]" :style="{ color: neon.pink, opacity: 0.3 }">ai</span>
+                <span class="relative" style="width: 18px; height: 14px; display: inline-flex">
+                  <IconBob
+                    :size="14"
+                    :weight="ICON_WEIGHT"
+                    :style="{ color: neon.cyan, opacity: 0.6 }"
+                  />
+                  <span
+                    class="absolute -top-0.5 text-[9px] font-bold leading-none"
+                    style="color: #fa8072; right: -1px"
+                    >+</span
+                  >
+                </span>
+                <span class="text-[10px]" style="color: #505058">New Team</span>
               </button>
             </div>
             <n-input-group>
