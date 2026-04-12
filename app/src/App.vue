@@ -797,15 +797,22 @@ function getIcon(key: string) {
 
           <!-- Input -->
           <div class="px-4 py-2.5 shrink-0" style="border-top: 1px solid #2a2a2e">
-            <!-- New Team — above the input, right where you'd start typing -->
+            <!-- BoB brand — tap to start a new team -->
             <div v-if="currentView !== 'bob'" class="flex justify-start mb-1.5">
               <button
-                class="flex items-center gap-1.5 px-2 py-0.5 cursor-pointer border-0 rounded-full transition-colors"
-                style="background: transparent; color: #505058"
+                class="flex items-center gap-1 px-2 py-0.5 cursor-pointer border-0 rounded-full transition-colors"
+                style="background: transparent"
                 @click="newTeam"
               >
-                <IconNewTeam :size="11" :weight="ICON_WEIGHT" />
-                <span class="text-[10px]">New Team</span>
+                <IconBob
+                  :size="12"
+                  :weight="ICON_WEIGHT"
+                  :style="{ color: neon.cyan, opacity: 0.5 }"
+                />
+                <span class="text-[10px] font-medium" :style="{ color: neon.cyan, opacity: 0.4 }"
+                  >BoB</span
+                >
+                <span class="text-[8px]" :style="{ color: neon.pink, opacity: 0.3 }">ai</span>
               </button>
             </div>
             <n-input-group>
