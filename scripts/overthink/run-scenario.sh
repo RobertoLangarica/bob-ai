@@ -1,5 +1,5 @@
 #!/bin/bash
-# run-scenario.sh — Run the pr-review scenario (with logging, without overthink CLI)
+# run-scenario.sh -- Run the pr-review scenario (with logging, without overthink CLI)
 #
 # Usage:
 #   bash scripts/overthink/run-scenario.sh <pr-number> [repo] [base-ref]
@@ -29,10 +29,10 @@ fi
 
 export GIT_PAGER=cat
 
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🔍 Sentinel (Code Review) — PR Review Scenario"
-echo "  PR: #$PR_NUMBER | Repo: $REPO | Base: $BASE_REF"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "=========================================="
+echo "  SENTINEL // Code Review"
+echo "  PR #$PR_NUMBER | $REPO | base: $BASE_REF"
+echo "=========================================="
 
 STARTED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 LOG_DIR="$REPO_ROOT/.overthink/logs"
@@ -63,5 +63,5 @@ cat > "$SCENARIO_LOG" << EOF
 EOF
 
 echo ""
-echo "📋 Scenario log saved: $SCENARIO_LOG"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "[log] $SCENARIO_LOG"
+echo "=========================================="
