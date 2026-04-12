@@ -351,3 +351,87 @@ app/src/
 - [ ] Should the orbital view animate (slow orbit rotation)?
 - [ ] File chips in task stream — should they be clickable to open in editor?
 - [x] ~~How do we handle many teams in the top nav?~~ → Solved: BoB hover menu dropdown. Teams listed vertically in popover, scales naturally.
+
+---
+
+## Chat Timeline Philosophy (Added Session 2)
+
+### Timeline Is a Work Log, Not a Chat
+
+The chat view was reframed from "messages between participants" to a **chronological work log**. User messages and BoB responses sit alongside agent activity events, creating a single scannable timeline.
+
+### Agent-to-Agent Messages: Hidden by Default
+
+**Decision:** Agent-to-agent chatter is NOT shown as chat bubbles. Instead:
+
+- **Delegation events** show Team Lead assigning work (compact one-liners)
+- **Thinking sections** capture agent reasoning (collapsible)
+- **Tool-use events** show agents working (compact chips)
+- **Activity cards** summarize progress snapshots
+
+If users want full agent coordination detail, the Activity View provides that. The chat timeline stays clean and scannable.
+
+### "Speaking to BoB" Contract
+
+**Decision:** The user must always feel they're talking to BoB, regardless of which team is selected.
+
+- Input area shows `👻 BoB` label (always visible)
+- In team view: `👻 BoB · [Team Name]` shows BoB is the bridge
+- BoB always responds first, then agent events appear below
+- When work completes, BoB summarizes results
+
+### Milestone Visual Treatment
+
+**Decision:** Milestones get full-width banners that break the timeline rhythm.
+
+- Crown icon (👑) in neon green
+- No avatar — centered, full-width
+- Thin green lines above and below
+- Subtle gradient background
+- Never collapse — always visible as timeline anchors
+
+### New Timeline Item Types
+
+Added 6 new event-driven item types (see `docs/12-CHAT-TIMELINE-SPEC.md`):
+
+- `tool-use` — Compact inline chips for agent tool invocations
+- `code-change` — Card with file list + diff stats
+- `web-search` — Card with query + results
+- `web-scrape` — Card with URL + content summary
+- `milestone` — Full-width achievement banner
+- `delegation` — Compact agent-to-agent handoff row
+
+### New Icons Added
+
+| Icon      | Phosphor       | Name            | Metaphor                |
+| --------- | -------------- | --------------- | ----------------------- |
+| Tool      | PhLightning    | `IconTool`      | ⚡ Fast electric action |
+| Search    | PhBinoculars   | `IconSearch`    | 🔭 Scouting the web     |
+| Scrape    | PhSpider       | `IconScrape`    | 🕷️ Crawling the web     |
+| Milestone | PhCrown        | `IconMilestone` | 👑 Achievement royalty  |
+| Delegate  | PhArrowRight   | `IconDelegate`  | → Handoff direction     |
+| Diff      | PhPencilSimple | `IconDiff`      | ✏️ Writing code         |
+
+---
+
+## Architecture Decisions (Added Session 2)
+
+### Event-Driven Activity Hub
+
+**Decision:** All agent activity flows through a central Activity Hub via `emit(type, payload)`. Agents don't know about the UI; the UI subscribes to the hub. This decouples agents from presentation and allows swapping the UI framework.
+
+### Hybrid Storage: JSON + SQLite
+
+**Decision:** Config files (calibrations, templates) use JSON (git-friendly, human-readable). High-volume data (events, chat history, metrics) uses SQLite (queryable, filterable). SQLite files are gitignored; JSON files are committed.
+
+### Calibration via Structured Questions
+
+**Decision:** Rather than free-form instructions, BoB calibrates agents through structured multiple-choice questions. This produces deterministic rules that get injected verbatim into agent system prompts, eliminating LLM interpretation variance.
+
+### Universal Agent Lifecycle
+
+**Decision:** All agents — coding, research, writing, design — follow the same lifecycle: SPAWN → DEBRIEF → PLAN → WORK → COMPLETE. Non-coding agents use the same event types; the system is agent-type-agnostic.
+
+### Workspace Persistence (.bob/ directory)
+
+**Decision:** All bob-ai state lives in `.bob/` within the project workspace. Calibrations, team templates, and milestones are git-committable. History and metrics are local-only (SQLite, gitignored).

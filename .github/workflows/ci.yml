@@ -49,13 +49,13 @@ jobs:
           DIFF_LINES=$(git diff --stat origin/${{ github.base_ref }}...HEAD | tail -1 | awk '{print $4+$6}')
           echo "PR has $DIFF_LINES lines changed"
 
-          if [ "$DIFF_LINES" -gt 600 ]; then
-            echo "::error::PR too large ($DIFF_LINES lines). Max 600 lines. Split into smaller PRs."
+          if [ "$DIFF_LINES" -gt 500 ]; then
+            echo "::error::PR too large ($DIFF_LINES lines). Max 500 lines. Split into smaller PRs."
             exit 1
           fi
 
-          if [ "$DIFF_LINES" -gt 450 ]; then
-            echo "::warning::PR approaching size limit ($DIFF_LINES/600 lines)"
+          if [ "$DIFF_LINES" -gt 375 ]; then
+            echo "::warning::PR approaching size limit ($DIFF_LINES/500 lines)"
           fi
 
       - name: Validate conventional commits

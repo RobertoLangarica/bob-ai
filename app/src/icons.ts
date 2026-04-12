@@ -67,6 +67,14 @@ export { PhBracketsCurly as IconCode } from '@phosphor-icons/vue' // code = brac
 export { PhChatCircle as IconChat } from '@phosphor-icons/vue' // chat = chat circle
 export { PhHeartbeat as IconActivity } from '@phosphor-icons/vue' // activity = heartbeat
 
+// ── Timeline Events ───────────────────────────────────
+export { PhLightning as IconTool } from '@phosphor-icons/vue' // tool invoke = lightning (zap!)
+export { PhBinoculars as IconSearch } from '@phosphor-icons/vue' // web search = binoculars (scouting)
+export { PhSpider as IconScrape } from '@phosphor-icons/vue' // web scrape = spider (crawling the web)
+export { PhCrown as IconMilestone } from '@phosphor-icons/vue' // milestone = crown (achievement royalty)
+export { PhArrowRight as IconDelegate } from '@phosphor-icons/vue' // delegation = arrow (handoff)
+export { PhPencilSimple as IconDiff } from '@phosphor-icons/vue' // code changes = pencil (writing code)
+
 /**
  * Default icon weight for the entire app.
  * "light" = thinnest strokes, most invisible feel.

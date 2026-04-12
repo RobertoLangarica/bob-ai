@@ -84,6 +84,7 @@ pnpm install
 ### Fallback to npm
 
 If pnpm is not installed, the script falls back to npm. This works but:
+
 - Each worktree gets its own `node_modules/` copy
 - Slower install times
 - More disk usage
@@ -127,11 +128,11 @@ git worktree list
 
 ## PR Size Guide
 
-- **Target**: <450 lines per PR
-- **Warning**: 450-600 lines
-- **Blocked**: >600 lines (CI will fail)
+- **Target**: <375 lines per PR
+- **Warning**: 375-500 lines
+- **Blocked**: >500 lines (CI will fail)
 
-If your changes exceed 600 lines, split into multiple worktrees/PRs:
+If your changes exceed 500 lines, split into multiple worktrees/PRs:
 
 ```bash
 # Split work across worktrees

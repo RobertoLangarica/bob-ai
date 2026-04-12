@@ -33,7 +33,7 @@ bob-ai already has:
    - Should be triggerable with: overthink scenario run pr-review --instance bob-ai --env PR_NUMBER=42
    - The scenario should:
      a. Fetch the PR diff via gh CLI
-     b. Check PR size (block >600 lines)
+      b. Check PR size (block >500 lines)
      c. Validate conventional commits
      d. Scan for console.log, secrets, TODO/FIXME, `: any` types
      e. Post results as a PR comment via gh pr comment
@@ -67,19 +67,19 @@ bob-ai already has:
 
 ## What Already Exists
 
-| File | Purpose |
-|------|---------|
-| `scripts/review-pr.sh` | Standalone PR review script (works now) |
-| `scripts/task-specs/pr-reviewer.v1.json` | Overthink TaskSpec definition |
-| `.github/workflows/agent-review.yml` | GitHub Action that runs review on PR events |
-| `.github/PULL_REQUEST_TEMPLATE/agent.md` | Agent PR template with callsign format |
+| File                                     | Purpose                                     |
+| ---------------------------------------- | ------------------------------------------- |
+| `scripts/review-pr.sh`                   | Standalone PR review script (works now)     |
+| `scripts/task-specs/pr-reviewer.v1.json` | Overthink TaskSpec definition               |
+| `.github/workflows/agent-review.yml`     | GitHub Action that runs review on PR events |
+| `.github/PULL_REQUEST_TEMPLATE/agent.md` | Agent PR template with callsign format      |
 
 ## Expected Outcome
 
 After integration, the workflow is:
 
 ```
-Agent creates PR → GitHub Action triggers → review-pr.sh runs → 
+Agent creates PR → GitHub Action triggers → review-pr.sh runs →
   Posts review comment on PR → Saves locally to reviews/
 
 OR (local):

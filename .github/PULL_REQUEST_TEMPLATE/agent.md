@@ -1,10 +1,10 @@
-<!-- 
+<!--
   Agent PR Template — Use with: gh pr create --template agent.md
   This template is for PRs created by agents for human review.
-  
+
   Agents: Use your war nickname with activity in parentheses.
   Format: **Callsign (Activity)**
-  
+
   Examples:
     Viper (UI Component Build)
     Ghost (Backend API Design)
@@ -31,33 +31,41 @@
 ## What Changed
 
 ### Files Added
+
 <!-- List new files with brief purpose -->
+
 | File | Purpose |
-|------|---------|
-| | |
+| ---- | ------- |
+|      |         |
 
 ### Files Modified
+
 <!-- List modified files with what changed -->
+
 | File | Change |
-|------|--------|
-| | |
+| ---- | ------ |
+|      |        |
 
 ### Files Deleted
+
 <!-- List deleted files and why -->
+
 | File | Reason |
-|------|--------|
-| | |
+| ---- | ------ |
+|      |        |
 
 ## Decisions Made
 
 <!-- List any technical decisions and rationale -->
-- **Decision**: 
-  **Why**: 
-  **Alternatives considered**: 
+
+- **Decision**:
+  **Why**:
+  **Alternatives considered**:
 
 ## Review Guide
 
 <!-- Ordered reading path for the reviewer -->
+
 1. **Start with**: <!-- Most important file to understand the change -->
 2. **Then read**: <!-- Supporting files -->
 3. **Finally check**: <!-- Tests, configs, edge cases -->
@@ -80,7 +88,7 @@ pnpm run dev
 - [ ] Code follows project conventions (check knowledge base)
 - [ ] No debug logs, temp files, or credentials committed
 - [ ] Conventional commit messages used
-- [ ] PR is under 600 lines
+- [ ] PR is under 500 lines
 - [ ] All new files have proper TypeScript types
 - [ ] No hardcoded values that should be configurable
 - [ ] Error cases are handled
@@ -89,11 +97,13 @@ pnpm run dev
 ## Questions for Reviewer
 
 <!-- Anything you're unsure about or want specific feedback on -->
-- 
+
+-
 
 ## Related
 
 <!-- Link to related PRs, issues, or decision logs -->
+
 - Decision log: `.bob-ai/decision-log/...`
 - Related PR: #
-- Task ID: 
+- Task ID:
