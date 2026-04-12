@@ -408,57 +408,51 @@ function getIcon(key: string) {
               </div>
             </template>
 
-            <!-- Dropdown menu — naked, outlined hover -->
+            <!-- Dropdown menu — naked, just icon + name -->
             <div
-              class="rounded-lg overflow-hidden py-1"
-              style="background: #131315; border: 1px solid #222226; min-width: 180px"
+              class="rounded-lg py-1.5 px-1"
+              style="background: #131315; border: 1px solid #222226; min-width: 160px"
             >
               <!-- BoB -->
               <button
-                class="team-menu-item flex items-center gap-2.5 mx-1 px-2.5 py-1.5 cursor-pointer rounded-md transition-all"
-                :style="{
-                  background: 'transparent',
-                  border: currentView === 'bob' ? '1px solid #2a2a2e' : '1px solid transparent',
-                  width: 'calc(100% - 8px)',
-                }"
+                class="w-full flex items-center gap-2 px-2 py-1.5 cursor-pointer border-0 rounded"
+                style="background: transparent"
                 @click="nav('bob')"
               >
-                <n-avatar
-                  :size="16"
-                  round
-                  :style="{ background: '#0D0D0F', border: `1px solid ${neon.cyan}40` }"
+                <IconBob
+                  :size="12"
+                  :weight="ICON_WEIGHT"
+                  :style="{ color: currentView === 'bob' ? neon.cyan : '#606068' }"
+                />
+                <span
+                  class="text-[11px]"
+                  :style="{ color: currentView === 'bob' ? '#e0e0e4' : '#808088' }"
+                  >BoB</span
                 >
-                  <IconBob :size="9" :weight="ICON_WEIGHT" :style="{ color: neon.cyan }" />
-                </n-avatar>
-                <span class="text-[11px] font-medium" style="color: #d0d0d4">BoB</span>
-                <span class="text-[9px] ml-auto" :style="{ color: neon.pink, opacity: 0.6 }"
+                <span class="text-[9px] ml-auto" :style="{ color: neon.pink, opacity: 0.4 }"
                   >ai</span
                 >
               </button>
-
-              <div class="mx-3 my-1" style="height: 1px; background: #1e1e22" />
 
               <!-- Teams -->
               <button
                 v-for="team in teams"
                 :key="team.id"
-                class="team-menu-item flex items-center gap-2.5 mx-1 px-2.5 py-1.5 cursor-pointer rounded-md transition-all"
-                :style="{
-                  background: 'transparent',
-                  border: currentView === team.id ? '1px solid #2a2a2e' : '1px solid transparent',
-                  width: 'calc(100% - 8px)',
-                }"
+                class="w-full flex items-center gap-2 px-2 py-1.5 cursor-pointer border-0 rounded"
+                style="background: transparent"
                 @click="nav(team.id)"
               >
                 <component
                   :is="getIcon(team.icon)"
                   :size="12"
                   :weight="ICON_WEIGHT"
-                  style="color: #808088"
+                  :style="{ color: currentView === team.id ? '#b0b0b8' : '#606068' }"
                 />
-                <span class="text-[11px] font-medium flex-1 text-left" style="color: #909098">{{
-                  team.name
-                }}</span>
+                <span
+                  class="text-[11px] flex-1 text-left"
+                  :style="{ color: currentView === team.id ? '#e0e0e4' : '#808088' }"
+                  >{{ team.name }}</span
+                >
               </button>
             </div>
           </n-popover>
@@ -852,9 +846,3 @@ function getIcon(key: string) {
     </div>
   </n-config-provider>
 </template>
-
-<style>
-.team-menu-item:hover {
-  border-color: #2a2a2e !important;
-}
-</style>
