@@ -23,5 +23,8 @@ export * from './calibration'
 // Templates
 export * from './templates'
 
+// Timeline
+export * from './timeline'
+
 // BoB Orchestrator
 export * from './bob'
