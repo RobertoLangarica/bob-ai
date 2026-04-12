@@ -32,37 +32,37 @@ We tried a sidebar and rejected it (see Rejected Ideas). Then tried team tabs in
 **Current layout:**
 
 ```
-[👻 BoB ▾ SWE Team ●]  ...  [Orbital|Tasks] [💓 Activity] [🍪]
-                                ↑ only when Activity mode
+[👻 SWE Team ▾]  ...  [Orbital|Tasks] [💓 Activity] [🍪]
+ ┊ Research Team       ↑ only when Activity mode
+ ┊   ░░░ (fade)
 ```
 
-- **Left side**: BoB avatar as a **hoverable dropdown menu** (n-popover, trigger=hover)
-  - Shows current team name + status dot next to BoB icon
-  - Hover opens a dropdown listing BoB + all teams
-  - Click an item to switch chat context
-  - BoB entry shows "ai" in neon pink on the right
-  - Running teams show green dot, paused show yellow dot
+- **Left side**: BoB avatar circle + current team name + `▾` caret
+  - Avatar: 18px round, `#0D0D0F` bg, `${cyan}40` border
+  - Hover opens a dropdown listing **only teams** (no BoB entry)
+  - Below the trigger: **stacked team peek** — other teams shown at decreasing opacity (0.3, 0.12) with an alpha gradient mask fading into the nav bg
+  - No status dots anywhere (removed — clutters the minimal feel)
 - **Right side**: Activity toggle + sub-view switcher + settings
-- Active item gets `#1e1e22` background in the dropdown
-- Dropdown styled: `#161619` background, `#2a2a2e` border, 180px min-width
+- Dropdown is **naked**: `#131315` bg, `#222226` border, 160px min-width
+  - Items: just icon + team name, no backgrounds, no borders
+  - Active team: brighter text (`#e0e0e4` vs `#808088`) and icon (`#b0b0b8` vs `#606068`)
+  - No BoB entry — BoB is the app brand, not a menu item
 
 ### New Team Button
 
-- **Not in the nav bar** — too important to hide, but nav space is precious
-- Instead: a **floating bubble embedded in the top border of the chat area**
-- Visually: a small pill that hangs from the top edge (`rounded-b-lg`, no top border)
-- Contains: MagicWand icon + "New Team" label
-- Subtle by default (`#707078` text), highlights to cyan when already on BoB chat
-- On hover: slight downward expansion (`hover:pb-1.5`) for tactile feel
+- Positioned **above the input area** (bottom of chat), close to where the user types
+- Only shown when viewing a team chat (hidden on BoB since you're already there)
+- Visual: BoB ghost icon in cyan (60% opacity) + salmon `+` sign positioned to the right of the ghost + "New Team" label in muted gray (`#505058`)
+- The salmon pink (`#FA8072`) for the `+` — warmer than the neon pink, more inviting
 - Click action: switches to BoB chat (team creation happens through conversation)
 
-**Icon candidates evaluated:**
-| Icon | Metaphor | Verdict |
-|------|----------|---------|
-| MagicWand | Conjure a team | ✅ Current pick — feels like creation magic |
-| Lightning | Spark a team | Good energy, but too aggressive |
-| Planet | New world | Nice but too abstract |
-| Compass | New direction | Exploratory, but doesn't say "create" |
+**New Team icon evolution:**
+| Attempt | Verdict |
+|---------|---------|
+| MagicWand + "New Team" as floating border bubble | Too clever, border bubble felt detached |
+| MagicWand + "New Team" at top of chat messages | Too far from the input, user's first action is to type |
+| BoB brand (ghost + "BoB ai") above input | Branding felt wrong as a button |
+| Ghost icon in cyan + salmon `+` + "New Team" above input | ✅ Current — clear, branded, positioned for action |
 
 ### Two Modes
 
@@ -94,6 +94,7 @@ Green:   #39FF14  — Success, completed
 Yellow:  #CCFF00  — Warnings, paused
 Pink:    #FF10F0  — Errors, "ai" subtext
 Orange:  #FF6B2B  — Activity, working
+Salmon:  #FA8072  — Warm accent (New Team "+", friendlier than neon pink)
 ```
 
 ### Agent Color Assignments
@@ -282,6 +283,35 @@ Each lane contains:
 
 - Showed all 4 visualizations simultaneously
 - User preferred full-screen single views for the compact window
+
+### Status Dots in Nav / Dropdown
+
+- Green dots for running teams, yellow for paused
+- Cluttered the minimal feel — removed entirely
+- Status is implicit from the chat content
+
+### Filled Background on Dropdown Hover
+
+- `hover:bg-[#1e1e22]` filled backgrounds on menu items
+- Then tried outlined borders (`1px solid #2a2a2e`) on hover
+- Both felt too heavy — settled on naked items: just icon + name, active item shown by brighter text only
+
+### BoB Entry in Team Dropdown
+
+- Originally the dropdown listed BoB + all teams
+- BoB is the app brand, not a switchable "team" — removed from dropdown
+- User navigates to BoB via the "New Team" button above the input
+
+### "BoB ai ·" Prefix in Nav Trigger
+
+- Tried adding filled ghost + "BoB" + "ai" (salmon) + separator dot before team name
+- Felt cluttered — the BoB avatar is already the brand. Reverted to avatar + team name only
+
+### New Team as Floating Border Bubble
+
+- Tried a pill embedded in the top border of the chat area (`rounded-b-lg`, no top border)
+- Visually clever but felt disconnected from the workflow
+- Moved to above the input area where the user naturally starts typing
 
 ---
 
