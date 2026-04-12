@@ -1,0 +1,29 @@
+{
+  "task_spec_id": "bob-ai.pr_reviewer",
+  "version": "1",
+  "executor_kind": "exec",
+  "entrypoint": [
+    "/bin/bash",
+    "-lc",
+    "bash scripts/review-pr.sh \"${PR_NUMBER}\" \"${REPO}\" \"${BASE_REF}\""
+  ],
+  "inputs_schema": {
+    "type": "object",
+    "properties": {
+      "PR_NUMBER": { "type": "string", "description": "Pull request number" },
+      "REPO": { "type": "string", "description": "Repository in owner/repo format" },
+      "BASE_REF": { "type": "string", "description": "Base branch for the PR" }
+    },
+    "required": ["PR_NUMBER", "REPO"]
+  },
+  "retry_policy": {
+    "max_attempts": 2,
+    "backoff_seconds": 30
+  },
+  "timeout_policy": {
+    "max_runtime_seconds": 300
+  },
+  "budget_policy": {
+    "max_usd": 2.0
+  }
+}

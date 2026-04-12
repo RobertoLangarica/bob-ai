@@ -1,0 +1,32 @@
+{
+  "name": "bob-ai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "dev": "cd app && npm run dev",
+    "build": "cd app && npm run build",
+    "lint": "cd app && npm run lint",
+    "format": "cd app && npm run format",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "lint-staged": {
+    "app/**/*.{ts,tsx,vue}": [
+      "prettier --write"
+    ],
+    "**/*.md": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.0",
+    "lint-staged": "^16.0.0",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "prettier": "3.8.1"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

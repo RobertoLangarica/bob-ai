@@ -1,0 +1,35 @@
+name: Agent Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  agent-review:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run automated code review
+        run: bash scripts/review-pr.sh ${{ github.event.pull_request.number }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # Optional: Trigger overthink locally via webhook
+      # Uncomment when overthink is set up with a webhook listener
+      #
+      # - name: Trigger overthink PR review
+      #   run: |
+      #     curl -s -X POST http://localhost:8787/tasks/submit \
+      #       -H "Content-Type: application/json" \
+      #       -d '{
+      #         "task_spec_id": "bob-ai.pr_reviewer",
+      #         "inputs": {
+      #           "PR_NUMBER": "${{ github.event.pull_request.number }}",
+      #           "REPO": "${{ github.repository }}",
+      #           "BASE_REF": "${{ github.base_ref }}"
+      #         }
+      #       }' || echo "Overthink not available (local-only)"

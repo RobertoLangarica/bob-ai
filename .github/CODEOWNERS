@@ -1,0 +1,10 @@
+# bob-ai Code Owners
+
+# Vue frontend
+/app/src/           @roberto
+
+# Documentation
+/docs/              @roberto
+
+# CI/CD and repo config
+/.github/           @roberto

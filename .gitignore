@@ -1,0 +1,5 @@
+node_modules/
+screenshots/
+reviews/
+*.log
+.DS_Store

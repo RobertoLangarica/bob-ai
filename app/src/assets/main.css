@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+/* Neon design tokens */
+@theme {
+  --color-bg: #0D0D0F;
+  --color-surface: #161619;
+  --color-surface-hover: #1e1e22;
+  --color-border: #2a2a2e;
+  --color-primary: #BF40FF;
+  --color-primary-hover: #D06FFF;
+  --color-neon-cyan: #00FFDD;
+  --color-neon-pink: #FF10F0;
+  --color-neon-green: #39FF14;
+  --color-neon-yellow: #CCFF00;
+  --color-neon-purple: #BF40FF;
+  --color-neon-orange: #FF6B2B;
+  --color-success: #39FF14;
+  --color-warning: #CCFF00;
+  --color-danger: #FF10F0;
+  --color-text: #f0f0f0;
+  --color-muted: #707078;
+  --color-sidebar: #111113;
+}
+
+/* Base styles */
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* Monospace for code */
+code,
+pre,
+.font-mono {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}

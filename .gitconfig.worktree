@@ -1,0 +1,30 @@
+# .gitconfig.worktree — Git configuration for agent worktrees
+#
+# Apply to a worktree with:
+#   git config include.path ../.gitconfig.worktree
+#
+# Or auto-applied by create-agent-worktree.sh
+
+[core]
+    pager = cat
+
+[pager]
+    diff = false
+    log = false
+    show = false
+    status = false
+    branch = false
+
+[diff]
+    colorMoved = default
+
+[pull]
+    rebase = true
+
+[advice]
+    detachedHead = false
+
+[alias]
+    st = status --short
+    df = diff --no-pager --stat
+    lg = log --oneline -20 --no-pager
