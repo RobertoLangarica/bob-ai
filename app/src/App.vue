@@ -522,27 +522,18 @@ function getIcon(key: string) {
         <!-- ── Chat ──────────────────────────────── -->
         <template v-else>
           <div class="flex-1 overflow-y-auto relative" ref="scrollEl">
-            <!-- New Team bubble — embedded in the top border -->
-            <div
-              class="sticky top-0 z-10 flex justify-center pointer-events-none"
-              style="margin-top: -1px"
-            >
-              <button
-                class="pointer-events-auto flex items-center gap-1.5 px-3 py-1 rounded-b-lg cursor-pointer border-0 transition-all hover:pb-1.5"
-                :style="{
-                  background: '#161619',
-                  border: `1px solid #2a2a2e`,
-                  borderTop: 'none',
-                  color: currentView === 'bob' ? neon.cyan : '#707078',
-                }"
-                @click="newTeam"
-              >
-                <IconNewTeam :size="12" :weight="ICON_WEIGHT" />
-                <span class="text-[10px] font-medium">New Team</span>
-              </button>
-            </div>
-
             <div class="py-2">
+              <!-- New Team — top of chat, close to the input action -->
+              <div v-if="currentView !== 'bob'" class="flex justify-center py-2 pb-1">
+                <button
+                  class="flex items-center gap-1.5 px-3 py-1 cursor-pointer border-0 rounded-full transition-colors"
+                  style="background: transparent; color: #505058"
+                  @click="newTeam"
+                >
+                  <IconNewTeam :size="11" :weight="ICON_WEIGHT" />
+                  <span class="text-[10px]">New Team</span>
+                </button>
+              </div>
               <div
                 v-for="msg in messages"
                 :key="msg.id"
