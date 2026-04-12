@@ -9,7 +9,7 @@ export default {
     'scope-enum': [
       2,
       'always',
-      ['vue', 'tauri', 'sdk', 'workflow', 'knowledge', 'hooks', 'chat', 'ui'],
+      ['vue', 'tauri', 'sdk', 'core', 'workflow', 'knowledge', 'hooks', 'chat', 'ui'],
     ],
     'subject-case': [0],
   },
