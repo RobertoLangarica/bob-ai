@@ -77,6 +77,17 @@ const currentLabel = computed(() => {
   if (currentView.value === 'bob') return 'BoB'
   return currentTeam.value?.name || 'BoB'
 })
+const peekTeams = computed(() => {
+  // Show teams that aren't the current view (for the stacked peek)
+  const others =
+    currentView.value === 'bob'
+      ? teams.value
+      : [
+          { id: 'bob', name: 'BoB', icon: 'bob', status: 'idle' as const },
+          ...teams.value.filter((t) => t.id !== currentView.value),
+        ]
+  return others.slice(0, 3)
+})
 
 // ── Chat histories ────────────────────────────────────
 const chats = ref<Record<string, Message[]>>({
@@ -341,68 +352,113 @@ function getIcon(key: string) {
             v-model:show="menuOpen"
           >
             <template #trigger>
-              <button
-                class="flex items-center gap-2 px-2.5 py-1 rounded-md cursor-pointer border-0 transition-colors hover:bg-[#1e1e22]"
-                style="background: transparent"
-              >
-                <n-avatar
-                  :size="20"
-                  round
-                  :style="{ background: '#0D0D0F', border: `1px solid ${neon.cyan}` }"
+              <div class="flex flex-col cursor-pointer py-0.5" style="min-width: 120px">
+                <!-- Primary: current selection -->
+                <div class="flex items-center gap-2 px-1.5 py-0.5 rounded-md transition-colors">
+                  <n-avatar
+                    :size="18"
+                    round
+                    :style="{
+                      background: '#0D0D0F',
+                      border: `1px solid ${neon.cyan}40`,
+                      flexShrink: 0,
+                    }"
+                  >
+                    <IconBob :size="10" :weight="ICON_WEIGHT" :style="{ color: neon.cyan }" />
+                  </n-avatar>
+                  <span class="text-[11px] font-medium" style="color: #e0e0e4">{{
+                    currentLabel
+                  }}</span>
+                  <span
+                    class="text-[8px] transition-opacity"
+                    :style="{ color: '#404048', opacity: menuOpen ? 0 : 0.6 }"
+                    >▾</span
+                  >
+                </div>
+                <!-- Peek: stacked teams below with alpha fade -->
+                <div
+                  v-if="!menuOpen"
+                  class="relative overflow-hidden"
+                  style="height: 20px; margin-left: 2px"
                 >
-                  <IconBob :size="11" :weight="ICON_WEIGHT" :style="{ color: neon.cyan }" />
-                </n-avatar>
-                <span class="text-[11px] font-medium" style="color: #f0f0f0">{{
-                  currentLabel
-                }}</span>
-                <n-badge v-if="currentTeam?.status === 'running'" dot :color="neon.green" />
-                <span class="text-[9px]" style="color: #505058; margin-left: 2px">▾</span>
-              </button>
+                  <div
+                    v-for="(team, i) in peekTeams"
+                    :key="team.id"
+                    class="flex items-center gap-2 px-1.5"
+                    :style="{
+                      height: '13px',
+                      opacity: i === 0 ? 0.3 : 0.12,
+                      marginTop: i === 0 ? '1px' : '0',
+                    }"
+                  >
+                    <component
+                      :is="getIcon(team.icon)"
+                      :size="9"
+                      :weight="ICON_WEIGHT"
+                      style="color: #606068"
+                    />
+                    <span class="text-[9px]" style="color: #606068">{{ team.name }}</span>
+                  </div>
+                  <!-- Alpha gradient mask -->
+                  <div
+                    class="absolute inset-x-0 bottom-0 h-3"
+                    style="background: linear-gradient(transparent, #0d0d0f)"
+                  />
+                </div>
+              </div>
             </template>
 
-            <!-- Dropdown menu -->
+            <!-- Dropdown menu — naked, outlined hover -->
             <div
-              class="rounded-lg overflow-hidden"
-              style="background: #161619; border: 1px solid #2a2a2e; min-width: 180px"
+              class="rounded-lg overflow-hidden py-1"
+              style="background: #131315; border: 1px solid #222226; min-width: 180px"
             >
               <!-- BoB -->
               <button
-                class="w-full flex items-center gap-2.5 px-3 py-2 cursor-pointer border-0 transition-colors hover:bg-[#1e1e22]"
-                :style="{ background: currentView === 'bob' ? '#1e1e22' : 'transparent' }"
+                class="team-menu-item flex items-center gap-2.5 mx-1 px-2.5 py-1.5 cursor-pointer rounded-md transition-all"
+                :style="{
+                  background: 'transparent',
+                  border: currentView === 'bob' ? '1px solid #2a2a2e' : '1px solid transparent',
+                  width: 'calc(100% - 8px)',
+                }"
                 @click="nav('bob')"
               >
                 <n-avatar
-                  :size="18"
+                  :size="16"
                   round
-                  :style="{ background: '#0D0D0F', border: `1px solid ${neon.cyan}` }"
+                  :style="{ background: '#0D0D0F', border: `1px solid ${neon.cyan}40` }"
                 >
-                  <IconBob :size="10" :weight="ICON_WEIGHT" :style="{ color: neon.cyan }" />
+                  <IconBob :size="9" :weight="ICON_WEIGHT" :style="{ color: neon.cyan }" />
                 </n-avatar>
-                <span class="text-[11px] font-medium" style="color: #f0f0f0">BoB</span>
-                <span class="text-[9px] ml-auto" :style="{ color: neon.pink }">ai</span>
+                <span class="text-[11px] font-medium" style="color: #d0d0d4">BoB</span>
+                <span class="text-[9px] ml-auto" :style="{ color: neon.pink, opacity: 0.6 }"
+                  >ai</span
+                >
               </button>
 
-              <div class="mx-2" style="height: 1px; background: #2a2a2e" />
+              <div class="mx-3 my-1" style="height: 1px; background: #1e1e22" />
 
               <!-- Teams -->
               <button
                 v-for="team in teams"
                 :key="team.id"
-                class="w-full flex items-center gap-2.5 px-3 py-2 cursor-pointer border-0 transition-colors hover:bg-[#1e1e22]"
-                :style="{ background: currentView === team.id ? '#1e1e22' : 'transparent' }"
+                class="team-menu-item flex items-center gap-2.5 mx-1 px-2.5 py-1.5 cursor-pointer rounded-md transition-all"
+                :style="{
+                  background: 'transparent',
+                  border: currentView === team.id ? '1px solid #2a2a2e' : '1px solid transparent',
+                  width: 'calc(100% - 8px)',
+                }"
                 @click="nav(team.id)"
               >
                 <component
                   :is="getIcon(team.icon)"
-                  :size="13"
+                  :size="12"
                   :weight="ICON_WEIGHT"
-                  style="color: #b0b0b8"
+                  style="color: #808088"
                 />
-                <span class="text-[11px] font-medium flex-1 text-left" style="color: #b0b0b8">{{
+                <span class="text-[11px] font-medium flex-1 text-left" style="color: #909098">{{
                   team.name
                 }}</span>
-                <n-badge v-if="team.status === 'running'" dot :color="neon.green" />
-                <n-badge v-else-if="team.status === 'paused'" dot :color="neon.yellow" />
               </button>
             </div>
           </n-popover>
@@ -796,3 +852,9 @@ function getIcon(key: string) {
     </div>
   </n-config-provider>
 </template>
+
+<style>
+.team-menu-item:hover {
+  border-color: #2a2a2e !important;
+}
+</style>
