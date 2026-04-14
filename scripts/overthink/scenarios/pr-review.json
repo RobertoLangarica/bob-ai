@@ -1,0 +1,86 @@
+{
+  "scenario_id": "pr-review",
+  "name": "PR Code Review",
+  "description": "Automated code review for bob-ai pull requests. Validates size, conventions, and code quality.",
+  "version": "1.0.0",
+  "callsign": "◆ Sentinel",
+  "instance": "bob-ai",
+
+  "task_spec_ref": "bob-ai.pr_reviewer",
+
+  "trigger": {
+    "command": "overthink scenario run pr-review --instance bob-ai --env PR_NUMBER=${PR_NUMBER}",
+    "env": {
+      "PR_NUMBER": {
+        "type": "string",
+        "required": true,
+        "description": "Pull request number to review"
+      },
+      "REPO": {
+        "type": "string",
+        "required": false,
+        "default": "RobertoLangarica/bob-ai",
+        "description": "Repository in owner/repo format"
+      },
+      "BASE_REF": {
+        "type": "string",
+        "required": false,
+        "default": "main",
+        "description": "Base branch for the PR"
+      }
+    }
+  },
+
+  "steps": [
+    {
+      "id": "fetch-diff",
+      "name": "Fetch PR diff",
+      "description": "Retrieve the PR diff and metadata via gh CLI",
+      "command": "gh pr diff ${PR_NUMBER} --no-pager"
+    },
+    {
+      "id": "check-size",
+      "name": "Check PR size",
+      "description": "Block PRs exceeding 600 lines changed",
+      "rule": "total_lines <= 600",
+      "warning_threshold": 450
+    },
+    {
+      "id": "validate-commits",
+      "name": "Validate conventional commits",
+      "description": "Ensure all commits follow conventional format: type(scope): description",
+      "pattern": "^(feat|fix|refactor|docs|test|chore|perf|ci)(\\(.+\\))?: .+"
+    },
+    {
+      "id": "scan-issues",
+      "name": "Scan for code issues",
+      "description": "Check for console.log, secrets, TODO/FIXME, `: any` types",
+      "checks": [
+        { "id": "console-log", "pattern": "^\\+.*console\\.log", "severity": "warning" },
+        { "id": "secrets", "pattern": "^\\+.*(api_key|secret|password|token|\\.env)", "severity": "error" },
+        { "id": "todo-fixme", "pattern": "^\\+.*(TODO|FIXME|HACK|XXX)", "severity": "warning" },
+        { "id": "any-type", "pattern": "^\\+.*: any", "severity": "warning", "file_filter": "\\.(ts|vue)$" }
+      ]
+    },
+    {
+      "id": "post-results",
+      "name": "Post review results",
+      "description": "Post review as a PR comment via gh pr comment",
+      "command": "gh pr comment ${PR_NUMBER} --body \"${REVIEW_BODY}\""
+    },
+    {
+      "id": "save-local",
+      "name": "Save review locally",
+      "description": "Save review report to reviews/ directory",
+      "output_dir": "reviews/",
+      "output_file": "pr-${PR_NUMBER}-review.md"
+    }
+  ],
+
+  "policies": {
+    "timeout_seconds": 300,
+    "budget_usd": 2.0,
+    "max_retries": 2,
+    "retry_backoff_seconds": 30
+  }
+}
