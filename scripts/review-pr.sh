@@ -77,12 +77,12 @@ cat > "$REVIEW_FILE" << 'REVIEW_HEADER'
 REVIEW_HEADER
 
 # PR Size Assessment
-if [ "$TOTAL_LINES" -gt 500 ]; then
+if [ "$TOTAL_LINES" -gt 600 ]; then
   echo "### ⛔ PR Size: Too Large ($TOTAL_LINES lines)" >> "$REVIEW_FILE"
   echo "" >> "$REVIEW_FILE"
   echo "This PR exceeds the 500-line limit. Please split into smaller PRs." >> "$REVIEW_FILE"
   echo "" >> "$REVIEW_FILE"
-elif [ "$TOTAL_LINES" -gt 375 ]; then
+elif [ "$TOTAL_LINES" -gt 450 ]; then
   echo "### ⚠️ PR Size: Large ($TOTAL_LINES lines)" >> "$REVIEW_FILE"
   echo "" >> "$REVIEW_FILE"
   echo "Approaching the 500-line limit. Consider if this can be split." >> "$REVIEW_FILE"

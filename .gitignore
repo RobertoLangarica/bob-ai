@@ -1,5 +1,6 @@
 node_modules/
 screenshots/
 reviews/
+.overthink/
 *.log
 .DS_Store
